@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Document</title>
+</head>
+<body>
+   <button type="button" class="butt" id="butt">clickme</button>
+   <!-- // <script src="../js/rx.js"></script> -->
+   <script src="../js/rx.all.js"></script>
+   <script src="../js/jquery.js"></script>
+   <script>
+      
+      // // example1
+      // var button = document.querySelector('button'); // 获取 元素
+      // Rx.Observable.fromEvent(button, 'click')      // Observable.fromEvent 事件监听
+      //   .subscribe(() => console.log('Clicked!'));  // 订阅 为了让观察者看到Observable发出的项目,或者从Observable接收错误或完成的通知
+
+      // // example2
+      // // 隔离状态,使用纯函数来产生价值
+      // var button = document.querySelector('button');
+      // Rx.Observable.fromEvent(button, 'click')
+      //   .scan(count => count + 1, 0) //  对一个Observable发出的每个项目顺序应用一个函数,并发出每个连续的值,此处 0 为初始化值
+      //   .subscribe(count => console.log(`Clicked ${count} times`));
+      // // example3
+      // // 允许每2秒点击一次
+      // var button = document.querySelector('button');
+      // Rx.Observable.fromEvent(button, 'click')
+      //   .throttleTime(2000)
+      //   .scan(count => count + 1, 0)
+      //   .subscribe(count => console.log(`Clicked ${count} times`));
+        
+      // // example4
+      // // 转换通过可观察值传递的值,按钮上鼠标的位置
+      // var button = document.querySelector('button');
+      // Rx.Observable.fromEvent(button, 'click')
+      //   .throttleTime(1000)    // throttle 节流阀
+      //   .map(event => event.clientX)
+      //   .scan((count, clientX) => count + clientX, 0)
+      //   .subscribe(count => console.log(count));
+      
+      // // example5
+      // // 用Observable并查看这些值，我们需要订阅它
+      // var  observable = Rx.Observable.create(function (observer) {
+      //      observer.next(1); //“下一步”通知：发送一个值，如数字，字符串，对象等。
+      //      observer.next(2);
+      //      observer.next(3);
+      //      setTimeout(() => {
+      //        observer.next(4);
+      //        observer.complete(); //“完成”通知：不发送值 观察者严格遵守可观察合同，因此 5 将不会传递
+      //        observer.next(5);
+      //      }, 1000);
+      //    });
+
+      //    console.log('just before subscribe');
+      //    observable.subscribe({
+      //      next: x => console.log('got value ' + x),
+      //      error: err => console.error('something wrong occurred: ' + err),
+      //      complete: () => console.log('done'),
+      //    });
+      //    console.log('just after subscribe');
+      
+      // // example6
+      // // 取消订阅
+      // // Observable.range(start,num); 创建一个发射特定整数序列的Observable, start 为初始值, num为数量
+      // // Observable.interval(time);  按固定的时间间隔发射一个无限递增的整数序列
+      // // Observable.timer(time,val); 延迟 time 后发射 val 值
+      // var observable1 = Rx.Observable.interval(400); 
+      // var observable2 = Rx.Observable.interval(300);  
+      // var subscription = observable1.subscribe(x => console.log('first: ' + x));
+      // var childSubscription = observable2.subscribe(x => console.log('second: ' + x));
+      // subscription.add(childSubscription);
+      // setTimeout(() => {
+      //   subscription.unsubscribe();  
+      // }, 1000);
+      
+      // // example7
+      // // 主题是一种特殊类型的Observable，它允许将值多播到许多观察者
+      // var subject = new Rx.Subject();
+      // subject.subscribe({
+      //   next: (v) => console.log('observerA: ' + v)
+      // });
+      // subject.subscribe({
+      //   next: (v) => console.log('observerB: ' + v)
+      // });
+
+      // subject.next(1);
+      // subject.next(2);
+
+      // var source = Rx.Observable.interval(400).take(8)   // .take 只保留前面的8项数据
+      //     .map(i => ['1.2', '1.8', 'foo', '2', '2.0', '5', 'bar', '8', '13'][i]);
+      // var result = source
+      //     .map(x => parseInt(x))   //向下取整
+      //     .distinct()              //滤重
+      //     .filter(x => !isNaN(x))  //过滤
+      //     .scan((x, y) => x + y);  //累加
+
+      // result.subscribe(x => console.log(x));  // 结果 1+2+5+8=16
+
+   //ajax      
+      // function ajax(url , type="GET" , data="json"){  
+      //    var data = Rx.Observable.fromPromise(  
+      //       $.ajax({  
+      //          url: url,  
+      //          type: type,  
+      //          dataType: data  
+      //       })  
+      //       .promise()  
+      //    );  
+      //    return data;  
+      // } 
+      // var test = ajax("../data/objects.json");
+      // test.subscribe({
+      //    next: (val)=> console.log(val)
+      // })
+      
+      // Observable.just 需引用 rx.js 、rx.compat.js、 rx.lite.js、 rx.lite.compat.js 其中之一
+      // 将rx.all.js 换成 rx.js，两者冲突
+      // var requestStream = Rx.Observable.just("../data/objects.json");
+      // var responseStream = requestStream
+      //    .flatMap( requestUrl => {
+      //       return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
+      //    });
+      // responseStream.subscribe( response => {
+      //   console.log(response);
+      // });
+      
+  </script>
+</body>
+</html>
